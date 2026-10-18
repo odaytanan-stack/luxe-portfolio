@@ -5,6 +5,7 @@ import heroImg from "@/assets/emad-hero.png";
 import portraitImg from "@/assets/emad-portrait.png";
 import businessImg from "@/assets/emad-business.png";
 import { content, type Lang } from "@/lib/content";
+import { absoluteUrl } from "@/lib/seo";
 
 export function Site({ lang }: { lang: Lang }) {
   const t = content[lang];
@@ -32,9 +33,30 @@ export function Site({ lang }: { lang: Lang }) {
 
   const Arrow = rtl ? ArrowLeft : ArrowRight;
   const navIds = ["home", "about", "business", "sports", "contact"] as const;
+  const featureImages = rtl
+    ? [portraitImg, businessImg, portraitImg]
+    : [businessImg, portraitImg, businessImg];
+  const personSchema = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "@id": `${absoluteUrl(rtl ? "/ar" : "/en")}#person`,
+    name: "عماد كيطون",
+    alternateName: "Emad Keton",
+    url: absoluteUrl(rtl ? "/ar" : "/en"),
+    description: t.heroText,
+    jobTitle: rtl ? "رجل أعمال" : "Syrian Businessman",
+    nationality: "Syrian",
+    telephone: "+963982666500",
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Damascus",
+      addressCountry: "SY",
+    },
+  };
 
   return (
     <div dir={rtl ? "rtl" : "ltr"} lang={lang} className="min-h-screen">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }} />
       <header
         className={`fixed inset-x-0 z-50 transition-all duration-500 ${
           scrolled
@@ -73,12 +95,9 @@ export function Site({ lang }: { lang: Lang }) {
       </header>
 
       {/* HERO */}
-      <section id="home" className="relative overflow-hidden bg-hero text-hero-foreground">
-        <div className="pointer-events-none absolute -top-40 end-[-10%] h-[600px] w-[600px] rounded-full bg-primary/30 blur-3xl" />
-        <div className="pointer-events-none absolute bottom-0 start-[-10%] h-[400px] w-[400px] rounded-full bg-accent/10 blur-3xl" />
+      <section id="home" className="relative overflow-hidden bg-hero-display text-hero-foreground">
         <div className="relative mx-auto grid min-h-screen max-w-6xl items-end gap-8 px-6 pt-28 md:grid-cols-2">
           <div className="animate-fade-up self-center pb-12">
-            <p className="mb-5 text-xs font-semibold uppercase tracking-[0.35em] text-accent">{t.eyebrow}</p>
             <h1 className="text-5xl font-bold leading-tight md:text-7xl">{t.name}</h1>
             <div className="my-6 h-px w-24 bg-gold-gradient" />
             <p className="text-lg font-medium opacity-90">{t.tagline}</p>
@@ -93,8 +112,17 @@ export function Site({ lang }: { lang: Lang }) {
             </div>
           </div>
           <div className="relative flex justify-center self-end">
-            <div className="absolute bottom-0 h-[80%] w-[80%] rounded-t-full bg-gradient-to-t from-accent/25 to-transparent" />
-            <img src={heroImg} alt={t.name} className="relative max-h-[85vh] w-auto object-contain drop-shadow-2xl" />
+          {/*  <div className="absolute bottom-0 h-[80%] w-[80%] rounded-t-full bg-gradient-to-t from-accent/25 to-transparent" />*/}
+            <img
+              src={heroImg}
+              alt={t.name}
+              width={1102}
+              height={1427}
+              fetchPriority="high"
+              loading="eager"
+              decoding="async"
+              className={`relative max-h-[85vh] w-auto object-contain drop-shadow-2xl ${rtl ? "" : "scale-x-[-1]"}`}
+            />
           </div>
         </div>
       </section>
@@ -111,9 +139,11 @@ export function Site({ lang }: { lang: Lang }) {
         </div>
       </div>
 
-      <Feature id="about" eyebrow="01" title={t.aboutTitle} text={t.about} img={portraitImg} alt={t.name} />
-      <Feature id="business" eyebrow="02" title={t.businessTitle} text={t.business} img={businessImg} alt={t.name} reverse tags={t.businessTags} />
-      <Feature id="sports" eyebrow="03" title={t.sportsTitle} text={t.sports} img={heroImg} alt={t.name} tags={t.sportsTags} />
+      <main id="main-content">
+        <Feature id="about" eyebrow="01" title={t.aboutTitle} text={t.about} img={featureImages[0]} alt={t.name} />
+        <Feature id="business" eyebrow="02" title={t.businessTitle} text={t.business} img={featureImages[1]} alt={t.name} reverse tags={t.businessTags} />
+        <Feature id="sports" eyebrow="03" title={t.sportsTitle} text={t.sports} img={featureImages[2]} alt={t.name} tags={t.sportsTags} />
+      </main>
 
       {/* CONTACT */}
       <section id="contact" className="px-6 py-24">
@@ -152,7 +182,15 @@ function Feature({
           <div className="absolute -inset-3 rounded-3xl border border-accent/40" />
           <div className="relative flex aspect-[4/5] items-end justify-center overflow-hidden rounded-3xl bg-card-gradient shadow-elegant">
             <div className="absolute inset-x-0 top-0 h-1 bg-gold-gradient" />
-            <img src={img} alt={alt} loading="lazy" className="h-[92%] w-auto object-contain" />
+            <img
+              src={img}
+              alt={alt}
+              width={img === businessImg ? 1024 : 1086}
+              height={img === businessImg ? 1536 : 1448}
+              loading="lazy"
+              decoding="async"
+              className="h-[92%] w-auto object-contain"
+            />
           </div>
         </div>
         <div>
