@@ -4,6 +4,7 @@
 
 [build.environment]
   NODE_VERSION = "22"
+  NITRO_PRESET = "cloudflare-module"
 
 [[headers]]
   for = "/assets/*"
