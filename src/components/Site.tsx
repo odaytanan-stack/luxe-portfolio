@@ -67,7 +67,6 @@ export function Site({ lang }: { lang: Lang }) {
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
           <a href="#home" className="text-lg font-bold tracking-wide">
             {t.name}
-            <span className="text-gold-gradient">.</span>
           </a>
           <nav className="hidden gap-7 text-sm md:flex">
             {navIds.map((id, i) => (
