@@ -178,7 +178,7 @@ function Feature({
       <div className={`mx-auto grid max-w-6xl items-center gap-14 md:grid-cols-2 ${reverse ? "md:[&>*:first-child]:order-2" : ""}`}>
         <div className="relative">
           <div className="absolute -inset-3 rounded-3xl border border-accent/40" />
-          <div className="relative flex aspect-[3/4] items-end justify-center overflow-hidden rounded-3xl bg-card-gradient shadow-elegant">
+          <div className="relative flex aspect-square items-end justify-center overflow-hidden rounded-3xl bg-card-gradient shadow-elegant">
             <div className="absolute inset-x-0 top-0 h-1 bg-gold-gradient" />
             <img
               src={img}
@@ -187,7 +187,7 @@ function Feature({
               height={img === businessImg ? 1536 : 1448}
               loading="lazy"
               decoding="async"
-              className={`h-full max-h-full w-full max-w-full object-contain ${mirror ? "scale-x-[-1]" : ""}`}
+              className={`h-full w-full object-cover object-top ${mirror ? "scale-x-[-1]" : ""}`}
             />
           </div>
         </div>
