@@ -98,6 +98,11 @@
 @utility bg-hero { background-image: var(--gradient-hero); }
 [dir="rtl"] .bg-hero { background-image: var(--gradient-hero-rtl); }
 @utility bg-hero-display { background-image: var(--gradient-hero-display); }
+
+.hero-image-tone {
+  filter: brightness(0.86) saturate(0.82) contrast(1.08)
+    drop-shadow(0 24px 30px oklch(0.08 0.04 245 / 0.42));
+}
 @utility bg-gold-gradient { background-image: var(--gradient-gold); }
 @utility bg-card-gradient { background-image: var(--gradient-card); }
 @utility text-gold-gradient {

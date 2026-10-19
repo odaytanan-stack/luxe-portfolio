@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { Moon, Sun, Phone, MapPin, ArrowRight, ArrowLeft } from "lucide-react";
 import heroImg from "@/assets/emad-hero.png";
-import portraitImg from "@/assets/emad-portrait.png";
-import businessImg from "@/assets/emad-business.png";
+import portraitImg from "@/assets/emad-portrait.jpg";
+import businessImg from "@/assets/emad-business.jpg";
+import score from "@/assets/score.jpg";
 import { content, type Lang } from "@/lib/content";
 import { absoluteUrl } from "@/lib/seo";
 
@@ -33,9 +34,7 @@ export function Site({ lang }: { lang: Lang }) {
 
   const Arrow = rtl ? ArrowLeft : ArrowRight;
   const navIds = ["home", "about", "business", "sports", "contact"] as const;
-  const featureImages = rtl
-    ? [portraitImg, businessImg, portraitImg]
-    : [businessImg, portraitImg, businessImg];
+  const featureImages = [businessImg, portraitImg, score];
   const personSchema = {
     "@context": "https://schema.org",
     "@type": "Person",
@@ -120,7 +119,7 @@ export function Site({ lang }: { lang: Lang }) {
               fetchPriority="high"
               loading="eager"
               decoding="async"
-              className={`relative max-h-[85vh] w-auto object-contain drop-shadow-2xl ${rtl ? "" : "scale-x-[-1]"}`}
+              className={`hero-image-tone relative max-h-[85vh] w-auto object-contain ${!rtl ? "scale-x-[-1]" : ""}`}
             />
           </div>
         </div>
@@ -139,8 +138,8 @@ export function Site({ lang }: { lang: Lang }) {
       </div>
 
       <main id="main-content">
-        <Feature id="about" eyebrow="01" title={t.aboutTitle} text={t.about} img={featureImages[0]} alt={t.name} />
-        <Feature id="business" eyebrow="02" title={t.businessTitle} text={t.business} img={featureImages[1]} alt={t.name} reverse tags={t.businessTags} />
+        <Feature id="about" eyebrow="01" title={t.aboutTitle} text={t.about} img={featureImages[0]} alt={t.name} mirror={rtl} />
+        <Feature id="business" eyebrow="02" title={t.businessTitle} text={t.business} img={featureImages[1]} alt={t.name} mirror={rtl} reverse tags={t.businessTags} />
         <Feature id="sports" eyebrow="03" title={t.sportsTitle} text={t.sports} img={featureImages[2]} alt={t.name} tags={t.sportsTags} />
       </main>
 
@@ -170,16 +169,16 @@ export function Site({ lang }: { lang: Lang }) {
 }
 
 function Feature({
-  id, eyebrow, title, text, img, alt, reverse, tags,
+  id, eyebrow, title, text, img, alt, mirror, reverse, tags,
 }: {
-  id: string; eyebrow: string; title: string; text: string; img: string; alt: string; reverse?: boolean; tags?: string[];
+  id: string; eyebrow: string; title: string; text: string; img: string; alt: string; mirror?: boolean; reverse?: boolean; tags?: string[];
 }) {
   return (
     <section id={id} className="px-6 py-24">
       <div className={`mx-auto grid max-w-6xl items-center gap-14 md:grid-cols-2 ${reverse ? "md:[&>*:first-child]:order-2" : ""}`}>
         <div className="relative">
           <div className="absolute -inset-3 rounded-3xl border border-accent/40" />
-          <div className="relative flex aspect-[4/5] items-end justify-center overflow-hidden rounded-3xl bg-card-gradient shadow-elegant">
+          <div className="relative flex aspect-[3/4] items-end justify-center overflow-hidden rounded-3xl bg-card-gradient shadow-elegant">
             <div className="absolute inset-x-0 top-0 h-1 bg-gold-gradient" />
             <img
               src={img}
@@ -188,7 +187,7 @@ function Feature({
               height={img === businessImg ? 1536 : 1448}
               loading="lazy"
               decoding="async"
-              className="h-[92%] w-auto object-contain"
+              className={`h-full max-h-full w-full max-w-full object-contain ${mirror ? "scale-x-[-1]" : ""}`}
             />
           </div>
         </div>
