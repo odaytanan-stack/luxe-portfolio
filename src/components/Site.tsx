@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { Moon, Sun, Phone, MapPin, ArrowRight, ArrowLeft } from "lucide-react";
 import heroImg from "@/assets/emad-hero.png";
-import portraitImg from "@/assets/emad-portrait.jpg";
+import portraitImg from "@/assets/emad-portrait.png";
 import businessImg from "@/assets/emad-business.jpg";
 import score from "@/assets/score.jpg";
 import { content, type Lang } from "@/lib/content";
