@@ -3,10 +3,15 @@ import { Link } from "@tanstack/react-router";
 import { Moon, Sun, Phone, MapPin, ArrowRight, ArrowLeft } from "lucide-react";
 import heroImg from "@/assets/emad-hero.png";
 import portraitImg from "@/assets/emad-portrait.webp";
-import businessImg from "@/assets/emad-business.webp";
-import score from "@/assets/score.jpg";
+import steelImg from "@/assets/materials/istockphoto-2219287772-1024x1024-ezremove.png";
+import oilImg from "@/assets/materials/istockphoto-487609795-1024x1024.jpg";
+import plasticImg from "@/assets/materials/—Pngtree—3d illustration of white background_8463505.jpg";
+import rawImg from "@/assets/materials/raw.jpg";
+import towerImg from "@/assets/materials/tower.jpg";
 import { content, type Lang } from "@/lib/content";
 import { absoluteUrl } from "@/lib/seo";
+
+const materialImages = [steelImg, oilImg, plasticImg, rawImg] as const;
 
 export function Site({ lang }: { lang: Lang }) {
   const t = content[lang];
@@ -33,8 +38,7 @@ export function Site({ lang }: { lang: Lang }) {
   };
 
   const Arrow = rtl ? ArrowLeft : ArrowRight;
-  const navIds = ["home", "about", "business", "sports", "contact"] as const;
-  const featureImages = [businessImg, portraitImg, score];
+  const navIds = ["home", "about", "business", "materials", "contact"] as const;
   const personSchema = {
     "@context": "https://schema.org",
     "@type": "Person",
@@ -110,7 +114,6 @@ export function Site({ lang }: { lang: Lang }) {
             </div>
           </div>
           <div className="relative flex justify-center self-end">
-          {/*  <div className="absolute bottom-0 h-[80%] w-[80%] rounded-t-full bg-gradient-to-t from-accent/25 to-transparent" />*/}
             <img
               src={heroImg}
               alt={t.name}
@@ -127,7 +130,7 @@ export function Site({ lang }: { lang: Lang }) {
 
       {/* FACTS */}
       <div className="border-b bg-card">
-        <div className="mx-auto grid max-w-6xl grid-cols-2 gap-6 px-6 py-8 md:grid-cols-4">
+        <div className="mx-auto grid max-w-6xl grid-cols-1 justify-items-center gap-6 px-6 py-8 text-center sm:grid-cols-3">
           {t.facts.map(([k, v]) => (
             <div key={k}>
               <p className="text-xs uppercase tracking-widest text-muted-foreground">{k}</p>
@@ -138,9 +141,67 @@ export function Site({ lang }: { lang: Lang }) {
       </div>
 
       <main id="main-content">
-        <Feature id="about" eyebrow="01" title={t.aboutTitle} text={t.about} img={featureImages[0]} alt={t.name} mirror={rtl} />
-        <Feature id="business" eyebrow="02" title={t.businessTitle} text={t.business} img={featureImages[1]} alt={t.name} mirror={rtl} reverse tags={t.businessTags} />
-        <Feature id="sports" eyebrow="03" title={t.sportsTitle} text={t.sports} img={featureImages[2]} alt={t.name} tags={t.sportsTags} />
+        <Feature
+          id="about"
+          eyebrow="01"
+          title={t.aboutTitle}
+          text={t.about}
+          img={portraitImg}
+          alt={t.name}
+          mirror={rtl}
+          width={1086}
+          height={1448}
+        />
+        <Feature
+          id="business"
+          eyebrow="02"
+          title={t.businessTitle}
+          text={t.business}
+          img={towerImg}
+          alt={t.businessTitle}
+          reverse
+          tags={t.businessTags}
+          width={1024}
+          height={1024}
+          objectPosition="object-center"
+        />
+
+        {/* MATERIALS */}
+        <section id="materials" className="border-y bg-card/40 px-6 py-24">
+          <div className="mx-auto max-w-6xl">
+            <p className="text-sm font-semibold tracking-[0.35em] text-accent">03</p>
+            <h2 className="mt-3 text-3xl font-bold md:text-5xl">{t.materialsTitle}</h2>
+            <div className="my-6 h-px w-20 bg-gold-gradient" />
+            <p className="max-w-2xl text-lg leading-loose text-muted-foreground">{t.materialsText}</p>
+
+            <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+              {t.materials.map((item, i) => (
+                <article
+                  key={item.title}
+                  className="group relative overflow-hidden rounded-3xl border border-accent/25 bg-card shadow-elegant transition duration-500 hover:-translate-y-1 hover:border-accent/50"
+                >
+                  <div className="absolute inset-x-0 top-0 z-10 h-1 bg-gold-gradient" />
+                  <div className="relative aspect-[4/5] overflow-hidden">
+                    <img
+                      src={materialImages[i]}
+                      alt={item.title}
+                      width={1024}
+                      height={1024}
+                      loading="lazy"
+                      decoding="async"
+                      className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-navy/90 via-navy/25 to-transparent" />
+                    <div className="absolute inset-x-0 bottom-0 p-5 text-hero-foreground">
+                      <h3 className="text-lg font-semibold tracking-wide">{item.title}</h3>
+                      <p className="mt-2 text-sm leading-relaxed opacity-80">{item.text}</p>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
       </main>
 
       {/* CONTACT */}
@@ -169,9 +230,20 @@ export function Site({ lang }: { lang: Lang }) {
 }
 
 function Feature({
-  id, eyebrow, title, text, img, alt, mirror, reverse, tags,
+  id, eyebrow, title, text, img, alt, mirror, reverse, tags, width, height, objectPosition = "object-top",
 }: {
-  id: string; eyebrow: string; title: string; text: string; img: string; alt: string; mirror?: boolean; reverse?: boolean; tags?: string[];
+  id: string;
+  eyebrow: string;
+  title: string;
+  text: string;
+  img: string;
+  alt: string;
+  mirror?: boolean;
+  reverse?: boolean;
+  tags?: string[];
+  width: number;
+  height: number;
+  objectPosition?: string;
 }) {
   return (
     <section id={id} className="px-6 py-24">
@@ -183,11 +255,11 @@ function Feature({
             <img
               src={img}
               alt={alt}
-              width={img === businessImg ? 1024 : 1086}
-              height={img === businessImg ? 1536 : 1448}
+              width={width}
+              height={height}
               loading="lazy"
               decoding="async"
-              className={`h-full w-full object-cover object-top ${mirror ? "scale-x-[-1]" : ""}`}
+              className={`h-full w-full object-cover ${objectPosition} ${mirror ? "scale-x-[-1]" : ""}`}
             />
           </div>
         </div>

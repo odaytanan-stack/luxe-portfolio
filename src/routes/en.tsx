@@ -4,7 +4,7 @@ import { absoluteUrl } from "@/lib/seo";
 
 const title = "Emad Keton | Syrian Businessman | Official Website";
 const description =
-  "Emad Keton is a Syrian businessman, founder of Najez Import & Export, active in general trading and industrial raw materials, and owner of Score Academy.";
+  "Emad Keton is a Syrian businessman and founder of Najez Import & Export, active in general trading, industrial raw materials and sports.";
 const canonical = absoluteUrl("/en");
 
 export const Route = createFileRoute("/en")({
