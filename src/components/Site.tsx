@@ -2,12 +2,11 @@ import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { Moon, Sun, Phone, MapPin, ArrowRight, ArrowLeft } from "lucide-react";
 import heroImg from "@/assets/emad-hero.png";
-import portraitImg from "@/assets/emad-portrait.webp";
 import steelImg from "@/assets/materials/istockphoto-2219287772-1024x1024-ezremove.png";
 import oilImg from "@/assets/materials/istockphoto-487609795-1024x1024.jpg";
 import plasticImg from "@/assets/materials/—Pngtree—3d illustration of white background_8463505.jpg";
 import rawImg from "@/assets/materials/raw.jpg";
-import towerImg from "@/assets/materials/tower.jpg";
+import towerImg from "@/assets/materials/tower.png";
 import { content, type Lang } from "@/lib/content";
 import { absoluteUrl } from "@/lib/seo";
 
@@ -146,11 +145,12 @@ export function Site({ lang }: { lang: Lang }) {
           eyebrow="01"
           title={t.aboutTitle}
           text={t.about}
-          img={portraitImg}
+          img={heroImg}
           alt={t.name}
           mirror={rtl}
-          width={1086}
-          height={1448}
+          width={1102}
+          height={1427}
+          portrait
         />
         <Feature
           id="business"
@@ -230,7 +230,7 @@ export function Site({ lang }: { lang: Lang }) {
 }
 
 function Feature({
-  id, eyebrow, title, text, img, alt, mirror, reverse, tags, width, height, objectPosition = "object-top",
+  id, eyebrow, title, text, img, alt, mirror, reverse, tags, width, height, objectPosition = "object-top", portrait,
 }: {
   id: string;
   eyebrow: string;
@@ -244,14 +244,25 @@ function Feature({
   width: number;
   height: number;
   objectPosition?: string;
+  portrait?: boolean;
 }) {
   return (
     <section id={id} className="px-6 py-24">
       <div className={`mx-auto grid max-w-6xl items-center gap-14 md:grid-cols-2 ${reverse ? "md:[&>*:first-child]:order-2" : ""}`}>
         <div className="relative">
           <div className="absolute -inset-3 rounded-3xl border border-accent/40" />
-          <div className="relative flex aspect-square items-end justify-center overflow-hidden rounded-3xl bg-card-gradient shadow-elegant">
-            <div className="absolute inset-x-0 top-0 h-1 bg-gold-gradient" />
+          <div
+            className={`relative flex aspect-square items-end justify-center overflow-hidden rounded-3xl shadow-elegant ${
+              portrait ? "about-portrait-stage" : "bg-card-gradient"
+            }`}
+          >
+            <div className="absolute inset-x-0 top-0 z-10 h-1 bg-gold-gradient" />
+            {portrait && (
+              <>
+                <div className="about-portrait-glow pointer-events-none absolute inset-0" />
+                <div className="pointer-events-none absolute -bottom-8 left-1/2 h-40 w-[70%] -translate-x-1/2 rounded-full bg-accent/20 blur-3xl" />
+              </>
+            )}
             <img
               src={img}
               alt={alt}
@@ -259,7 +270,11 @@ function Feature({
               height={height}
               loading="lazy"
               decoding="async"
-              className={`h-full w-full object-cover ${objectPosition} ${mirror ? "scale-x-[-1]" : ""}`}
+              className={
+                portrait
+                  ? `hero-image-tone relative z-[1] h-[95%] w-auto max-w-[90%] object-contain ${mirror ? "scale-x-[-1]" : ""}`
+                  : `h-full w-full object-cover ${objectPosition} ${mirror ? "scale-x-[-1]" : ""}`
+              }
             />
           </div>
         </div>
