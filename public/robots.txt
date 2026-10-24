@@ -13,4 +13,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://emadketon.com/sitemap.xml
+Sitemap: https://emad-keton.com/sitemap.xml
