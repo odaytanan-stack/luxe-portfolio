@@ -17,7 +17,11 @@ export const Route = createFileRoute("/ar")({
       { property: "og:type", content: "profile" },
       { property: "og:locale", content: "ar_SY" },
       { property: "og:url", content: canonical },
+      { property: "og:image", content: absoluteUrl("/favicon.svg") },
+      { property: "og:image:width", content: "64" },
+      { property: "og:image:height", content: "64" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: absoluteUrl("/favicon.svg") },
       { name: "robots", content: "index,follow" },
     ],
     links: [
